@@ -1,0 +1,16 @@
+﻿# visual studio
+.vs
+packages/
+bin/
+obj/
+*.user
+
+# bower, npm
+vendor/
+node_modules/
+
+# build
+build/
+
+
+

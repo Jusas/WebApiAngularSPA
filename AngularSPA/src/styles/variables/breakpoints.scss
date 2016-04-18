@@ -1,0 +1,21 @@
+﻿
+// The scheme here (max-width) assumes "desktop first" approach, 
+// meaning the base style definitions are the widest ones.
+
+
+// If using neat grids, could be something like this.
+
+//$bp-medium: new-breakpoint(max-width 1024px 4);
+//$bp-small: new-breakpoint(max-width 690px 1);
+//$bp-xsmall: new-breakpoint(max-width 460px 1);
+
+
+// Without any grid system, you can just define these.
+
+@mixin breakpoint($breakpoint) {
+    @media screen and ($breakpoint) { @content }
+}
+
+$bp-medium: 'max-width: 1024px';
+$bp-small: 'max-width 690px';
+$bp-xsmall: 'max-width 460px';
