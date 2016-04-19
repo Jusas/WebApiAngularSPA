@@ -19,6 +19,9 @@ var autoprefixer = require('gulp-autoprefixer');
 var copy = require('gulp-contrib-copy');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var syncy = require('syncy');
+var rename = require('gulp-rename');
 var templateCache = require('gulp-angular-templatecache');
 
 /**
@@ -54,7 +57,7 @@ var vendor = {
             'vendor/bootstrap/dist/css/*.css',
 
             // Exclude these
-            '!vendor/bootstrap/dist/css/*.min.css',
+            '!vendor/bootstrap/dist/css/*.min.css'
         ]
     },
     minified: {
@@ -76,7 +79,9 @@ var vendor = {
  */
 var out = {
     css: config.buildDir + '/styles/',
-    vendor: config.buildDir + '/vendor/'
+    vendor: config.buildDir + '/vendor/',
+    assets: config.buildDir + '/assets/',
+    js: config.buildDir + '/js/'
 };
 
 
@@ -97,9 +102,33 @@ gulp.task('styles', function () {
        .pipe(sourceMaps.init())
        .pipe(sass(config.sass).on('error', sass.logError))
        .pipe(autoprefixer(config.autoprefixer))
-       .pipe(sourceMaps.write())
+       .pipe(sourceMaps.write('.'))
        .pipe(gulp.dest(out.css));
     return stream;
+});
+
+gulp.task('sync-assets', function() {
+    return syncy(['src/assets/**/*'], out.assets, { base: 'src/assets' })
+        .on('error', console.error)
+        .end();
+});
+
+gulp.task('angular-templates', function() {
+    return gulp.src('src/**/*.tpl.html')
+        .pipe(templateCache())
+        .pipe(gulp.dest('tmp'));
+});
+
+
+gulp.task('scripts', function() {
+    return gulp.src(['src/**/*.js', 'tmp/*.js'])
+        .pipe(sourceMaps.init())
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest(out.js))
+        .pipe(uglify({ mangle: true }))
+        .pipe(rename('all.min.js'))
+        .pipe(sourceMaps.write('.'))
+        .pipe(gulp.dest(out.js));
 });
 
 /**
