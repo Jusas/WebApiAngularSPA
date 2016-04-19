@@ -8,7 +8,8 @@
         'ngRoute',
 		'ngResource',
 		'common',
-        'todo-list'
+        'todo-list',
+        'templates'
     ];
 
     angular

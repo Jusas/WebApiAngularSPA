@@ -1,0 +1,1 @@
+angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("modules/todo-list/todo-list.tpl.html","<div>\r\n    Template here be dragons asdfa\r\n</div>");}]);

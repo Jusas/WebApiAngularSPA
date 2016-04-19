@@ -11,7 +11,7 @@
     function TodoListController($scope, Storage) {
         var vm = this;
         vm.title = 'TodoListController';
-
+        // test
         activate();
 
         ////////////////
