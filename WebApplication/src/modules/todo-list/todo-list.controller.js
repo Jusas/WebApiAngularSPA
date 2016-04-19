@@ -18,6 +18,7 @@
 
         function activate() {
             // Do stuff.
+            let name = 1;
         }
     }
 

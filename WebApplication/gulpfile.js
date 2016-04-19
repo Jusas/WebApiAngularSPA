@@ -21,6 +21,7 @@ var syncy = require('syncy');
 var rename = require('gulp-rename');
 var tsc = require('gulp-typescript');
 var merge = require('merge');
+var babel = require('gulp-babel');
 var templateCache = require('gulp-angular-templatecache');
 
 /**
@@ -46,6 +47,9 @@ var config = {
     angularTemplates: {
         standalone: true
     },
+    babel: {
+        presets: ['es2015']
+    },
     typeScript: {
         sources: ['src/**/*.module.ts', 'src/**/!(app)*.ts', 'src/app.ts'],
         typings: 'scripts/typings/',
@@ -63,7 +67,8 @@ var vendor = {
     development: {
         js: [
             'vendor/jquery/dist/**/*.js',
-            'vendor/angular*/**/*.js',            
+            'vendor/angular/**/*.js',
+            'vendor/angular*/**/*.js',
             'vendor/bootstrap/dist/**/.js',
 
             // Exclude these
@@ -79,6 +84,7 @@ var vendor = {
     },
     minified: {
         js: [
+            'vendor/angular/**/*.min.js',
             'vendor/angular*/**/*.min.js',
             'vendor/jquery/dist/**/*.min.js',
             'vendor/bootstrap/dist/**/.min.js'
@@ -156,7 +162,8 @@ gulp.task('angular-templates', function() {
 gulp.task('scripts', function() {
     return gulp.src(['tmp/templates.js', 'src/**/*.module.js', 'src/**/!(app)*.js', 'src/app.js', 'typescript-compiled/**/*.js'])
         .pipe(sourceMaps.init())
-        .pipe(concat('all.js'))
+        .pipe(babel(config.babel))        
+        .pipe(concat('all.js'))        
         .pipe(sourceMaps.write())
         .pipe(gulp.dest(out.js))
         .pipe(uglify(config.uglify))
