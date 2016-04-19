@@ -19,13 +19,21 @@ var uglify = require('gulp-uglify');
 var util = require('gulp-util');
 var syncy = require('syncy');
 var rename = require('gulp-rename');
+var tsc = require('gulp-typescript');
+var merge = require('merge');
 var templateCache = require('gulp-angular-templatecache');
 
 /**
  * Task configurations.
  */
 var config = {
-    buildDir: 'build',
+    // NOTE: Using parent paths is potentially dangerous! Be extremely careful!
+    // Clean task will empty the contents of this path! This also requires the
+    // force == true for the clean task.
+    buildDir: '../BuiltAngularApp',
+    clean: {
+        force: true
+    },
     sass: {
         outputStyle: 'compressed'
     },
@@ -33,12 +41,18 @@ var config = {
         browsers: ['last 2 versions']
     },
     uglify: {
-         mangle: true
+        mangle: true
     },
     angularTemplates: {
         standalone: true
+    },
+    typeScript: {
+        sources: ['src/**/*.module.ts', 'src/**/!(app)*.ts', 'src/app.ts'],
+        typings: 'scripts/typings/',
+        tsProject: tsc.createProject('tsconfig.json')
     }
 };
+
 
 /**
  * Vendor scripts and CSS's that we want to include in the build.
@@ -90,11 +104,16 @@ var out = {
 
 
 /**
- * Clean task: removes the whole build directory.
+ * Clean task: removes the whole build directory and temporary directories.
  */
 gulp.task('clean-build', function () {
-    return gulp.src(config.buildDir).pipe(clean());
+    return gulp.src([
+        config.buildDir + '/**/*',
+        'tmp',
+        'typescript-compiled'
+    ]).pipe(clean(config.clean));
 });
+
 
 /**
  * SCSS processing task. Processes the main.scss and uses autoprefixer
@@ -131,10 +150,11 @@ gulp.task('angular-templates', function() {
 
 /**
  * Processes all javascripts to a single file, then minifies it for production use.
+ * Plain Old Javascript files come first, compiled TS files are added after them.
  * Results in two files, all.js and all.min.js.
  */
 gulp.task('scripts', function() {
-    return gulp.src(['tmp/*.js', 'src/**/*.module.js', 'src/**/!(app)*.js', 'src/app.js'])
+    return gulp.src(['tmp/templates.js', 'src/**/*.module.js', 'src/**/!(app)*.js', 'src/app.js', 'typescript-compiled/**/*.js'])
         .pipe(sourceMaps.init())
         .pipe(concat('all.js'))
         .pipe(sourceMaps.write())
@@ -143,6 +163,17 @@ gulp.task('scripts', function() {
         .pipe(rename('all.min.js'))
         .pipe(sourceMaps.write('.'))
         .pipe(gulp.dest(out.js));
+});
+
+/**
+ * Compiles typescript files into temporary directory.
+ */
+gulp.task('typescript-compile', function() {
+    var compiledTs = gulp.src(config.typeScript.sources)
+        .pipe(sourceMaps.init())
+        .pipe(tsc(config.typeScript.tsProject))
+        .pipe(sourceMaps.write())
+        .pipe(gulp.dest('typescript-compiled'));
 });
 
 /**
@@ -197,6 +228,7 @@ gulp.task('build-development', function() {
     return runSequence(
         'clean-build',
         ['vendor-development-css', 'vendor-development-js', 'sync-assets', 'styles', 'index'],
+        'typescript-compile',
         'angular-templates',
         'scripts'
     );
@@ -208,7 +240,7 @@ gulp.task('build-development', function() {
 gulp.task('build-minified', function () {
     return runSequence(
         'clean-build',
-        ['vendor-minified-css', 'vendor-minified-js', 'sync-assets', 'styles', 'index'],
+        ['vendor-minified-css', 'vendor-minified-js', 'sync-assets', 'styles', 'index', 'typescript-compile'],
         'angular-templates',
         'scripts'
     );
@@ -220,6 +252,7 @@ gulp.task('build-minified', function () {
 gulp.task('default', ['build-development'], function () {
     gulp.watch('src/**/*.scss', ['styles']);
     gulp.watch('src/**/*.js', ['scripts']);
+    gulp.watch('src/**/*.ts', function () { runSequence('typescript-compile', 'scripts') });
     gulp.watch('src/**/*.tpl.html', function() { runSequence('angular-templates', 'scripts') });
     gulp.watch('src/assets/**/*', ['sync-assets']);
 });

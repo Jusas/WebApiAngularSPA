@@ -1,4 +1,4 @@
-﻿# visual studio
+# visual studio
 .vs
 packages/
 bin/
@@ -14,3 +14,6 @@ build/
 
 
 
+BuiltAngularApp/
+WebApplication/tmp/
+WebApplication/typescript-compiled/

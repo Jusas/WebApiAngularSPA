@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Module definition.
  */
 (function () {
