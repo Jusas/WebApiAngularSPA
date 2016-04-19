@@ -2,5 +2,5 @@
  * Module definition.
  */
 (function () {
-    angular.module('common', []);
+    angular.module('Common', []);
 })();

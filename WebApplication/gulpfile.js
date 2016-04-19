@@ -45,7 +45,8 @@ var config = {
         mangle: true
     },
     angularTemplates: {
-        standalone: true
+        standalone: true,
+        module: 'AngularTemplates'
     },
     babel: {
         presets: ['es2015']
@@ -159,8 +160,10 @@ gulp.task('angular-templates', function() {
  * Plain Old Javascript files come first, compiled TS files are added after them.
  * Results in two files, all.js and all.min.js.
  */
-gulp.task('scripts', function() {
-    return gulp.src(['tmp/templates.js', 'src/**/*.module.js', 'src/**/!(app)*.js', 'src/app.js', 'typescript-compiled/**/*.js'])
+gulp.task('scripts', function () {
+    // This looks a bit weird, since we want to include app.js last.
+    // Also we accommodate for both app.js and app.ts, adding to the confusion.
+    return gulp.src(['tmp/templates.js', 'src/**/*.module.js', 'src/**/!(app)*.js', 'src/app.js', 'typescript-compiled/**/*.js', 'typescript-compiled/app.js'])
         .pipe(sourceMaps.init())
         .pipe(babel(config.babel))        
         .pipe(concat('all.js'))        
@@ -176,7 +179,7 @@ gulp.task('scripts', function() {
  * Compiles typescript files into temporary directory.
  */
 gulp.task('typescript-compile', function() {
-    var compiledTs = gulp.src(config.typeScript.sources)
+    return gulp.src(config.typeScript.sources)
         .pipe(sourceMaps.init())
         .pipe(tsc(config.typeScript.tsProject))
         .pipe(sourceMaps.write())

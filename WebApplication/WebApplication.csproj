@@ -125,7 +125,6 @@
   <ItemGroup>
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="src\app.js" />
     <Content Include="src\assets\images\image.png" />
     <Content Include="src\index.html" />
     <Content Include="src\modules\common\common.module.js" />
@@ -133,8 +132,6 @@
     <Content Include="src\modules\common\directives\example.directive.js" />
     <Content Include="src\modules\common\directives\light-ng-click.directive.js" />
     <Content Include="src\modules\common\services\storage.service.js" />
-    <Content Include="src\modules\todo-list\todo-list.controller.js" />
-    <Content Include="src\modules\todo-list\todo-list.module.js" />
     <Content Include="src\modules\todo-list\todo-list.tpl.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -151,10 +148,16 @@
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="src\modules\todo-list\todo-list.test.ts" />
+    <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\modules\todo-list\todo-list.controller.ts" />
+    <TypeScriptCompile Include="src\modules\todo-list\todo-list.module.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\modules\common\classes\" />
+    <Folder Include="src\modules\common\interfaces\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
