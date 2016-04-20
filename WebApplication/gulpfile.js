@@ -115,12 +115,6 @@ var out = {
  * Clean task: removes the whole build directory and temporary directories.
  */
 gulp.task('clean-build', function () {
-    //return gulp.src([
-    //    config.buildDir + '/**/*',
-    //    'tmp',
-    //    'typescript-compiled'
-    //]).pipe(clean(config.clean));
-
     return del([
         config.buildDir + '/**/*',
         '!' + config.buildDir,
@@ -178,7 +172,7 @@ gulp.task('scripts', function () {
             'src/**/*.module.js',
             'src/**/!(app)*.js',
             'src/app.js',
-            'typescript-compiled/**/*!{.module,.service,.controller,app}.js', // apparently this doesn't work
+            'typescript-compiled/**/!(*.module.|*.service.|*.controller.|*.directive.|app.)*js', // All generic/non-Angular components first
             'typescript-compiled/**/*.directive.js',
             'typescript-compiled/**/*.service.js',
             'typescript-compiled/**/*.controller.js',
