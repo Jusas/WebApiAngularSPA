@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html ng-app="TodoApp"> 
 <head>
-    <title>SPA</title>
+    <title>ToDo Application</title>
     <meta charset="utf-8"/>
     <script src="vendor/vendor.bundle.js"></script>
     <script src="js/all.js"></script>
@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="vendor/vendor.bundle.css" />
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">ToDo List</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
     <div ng-view></div>
+</div>
 </body>
 </html>

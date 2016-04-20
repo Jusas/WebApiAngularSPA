@@ -1,3 +1,22 @@
-﻿<div>
-    Template here be dragons asdfa
+﻿<div class="row">
+    <div class="col-md-12">
+        <h2>ToDo list items</h2>
+        <button class="btn btn-primary" ng-click="todolist.addItem()">Add new item</button>
+    </div>
+
+</div>
+<div class="row todo-list">
+    <div class="col-md-12">
+        <ul class="list-group">
+            <li class="list-group-item todo-item" ng-repeat="item in todolist.todoItems track by $index">
+                <input type="checkbox" class="checkbox-inline todo-item__checkbox" ng-model="item.done"/>
+                <input type="text" ng-model="item.text" class="todo-item__label">
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-danger" ng-click="todolist.clearDone()">Clear done items</button>
+    </div>
 </div>

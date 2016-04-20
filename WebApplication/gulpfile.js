@@ -19,6 +19,7 @@ var uglify = require('gulp-uglify');
 var util = require('gulp-util');
 var syncy = require('syncy');
 var rename = require('gulp-rename');
+var del = require('del');
 var tsc = require('gulp-typescript');
 var merge = require('merge');
 var babel = require('gulp-babel');
@@ -114,11 +115,18 @@ var out = {
  * Clean task: removes the whole build directory and temporary directories.
  */
 gulp.task('clean-build', function () {
-    return gulp.src([
+    //return gulp.src([
+    //    config.buildDir + '/**/*',
+    //    'tmp',
+    //    'typescript-compiled'
+    //]).pipe(clean(config.clean));
+
+    return del([
         config.buildDir + '/**/*',
+        '!' + config.buildDir,
         'tmp',
         'typescript-compiled'
-    ]).pipe(clean(config.clean));
+    ], config.clean);
 });
 
 
@@ -161,9 +169,22 @@ gulp.task('angular-templates', function() {
  * Results in two files, all.js and all.min.js.
  */
 gulp.task('scripts', function () {
-    // This looks a bit weird, since we want to include app.js last.
-    // Also we accommodate for both app.js and app.ts, adding to the confusion.
-    return gulp.src(['tmp/templates.js', 'src/**/*.module.js', 'src/**/!(app)*.js', 'src/app.js', 'typescript-compiled/**/*.js', 'typescript-compiled/app.js'])
+    // This looks a bit weird, but we're controlling the order here.
+    // Note: plain old JS gets included first. Note that if you're really
+    // using plain JS instead of TS for Angular you'll probably need to check
+    // this order.
+    return gulp.src([
+            'tmp/templates.js',
+            'src/**/*.module.js',
+            'src/**/!(app)*.js',
+            'src/app.js',
+            'typescript-compiled/**/*!{.module,.service,.controller,app}.js', // apparently this doesn't work
+            'typescript-compiled/**/*.directive.js',
+            'typescript-compiled/**/*.service.js',
+            'typescript-compiled/**/*.controller.js',
+            'typescript-compiled/**/*.module.js',
+            'typescript-compiled/app.js' // The App is always the last as it depends on the other modules.
+        ])
         .pipe(sourceMaps.init())
         .pipe(babel(config.babel))        
         .pipe(concat('all.js'))        

@@ -1,3 +1,25 @@
 ﻿.todo-list {
-    display: block;
+    margin-top: 20px;
+}
+
+.todo-item {
+
+}
+
+input[type="checkbox"].todo-item__checkbox,
+.todo-item__label {
+    line-height: 1.5em;
+    vertical-align: middle;
+    margin: 0;
+    display: inline-block;
+}
+
+.todo-item__label {
+    margin-left: 10px;
+
+    border-color: transparent;
+
+    &:hover {
+        border-color: #cecece;
+    }
 }
