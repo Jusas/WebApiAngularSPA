@@ -1,5 +1,18 @@
 ﻿
+/**
+ * An example Angular Service (or factory) implementation in Typescript.
+ * In essence a service is (usually) a singleton that provides some service.
+ * This particular service provides storage services, in essence wraps
+ * localStorage and sessionStorage into a single service with some extra
+ * features like providing functionality for data expiration.
+ * Skip to class Storage to see the actual Service definition.
+ * Read more about Services: https://docs.angularjs.org/guide/services
+ */
 module Common {
+
+    /**
+     * Utility classes for the Storage service.
+     */
 
     export interface IBrowserStorage {
         setItem(key: any, data: any): void;
@@ -80,7 +93,19 @@ module Common {
 
     }
 
-
+    /**
+     * The Storage service class.
+     * This is a quite compact definition as most of the functionality
+     * was defined in other classes.
+     * Notable things:
+     * - The service is introduced to Angular in the module file (common.module.ts)
+     * - The $inject is for dependency injection (minification protection) and the order and
+     *   names must match the constructor parameters
+     * - $rootScope is actually not used for anything here except to demonstrate dependency injection
+     * - A factory method is one again required for Angular to instantiate the service.
+     *
+     * Services are pretty simple to implement even in Typescript.
+     */
     export class Storage {
 
         public static $inject = ['$rootScope'];

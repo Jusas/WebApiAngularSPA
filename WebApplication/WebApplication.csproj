@@ -127,11 +127,8 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="src\assets\images\image.png" />
     <Content Include="src\index.html" />
-    <Content Include="src\modules\common\common.module.js" />
-    <Content Include="src\modules\common\directives\example.directive.html" />
-    <Content Include="src\modules\common\directives\example.directive.js" />
-    <Content Include="src\modules\common\directives\light-ng-click.directive.js" />
-    <Content Include="src\modules\common\services\storage.service.js" />
+    <TypeScriptCompile Include="src\modules\common\common.module.ts" />
+    <Content Include="src\modules\common\directives\example.directive.tpl.html" />
     <Content Include="src\modules\todo-list\todo-list.tpl.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -149,6 +146,9 @@
     <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\modules\common\directives\example.directive.ts" />
+    <TypeScriptCompile Include="src\modules\common\services\storage.service.ts" />
+    <TypeScriptCompile Include="src\modules\todo-list\todo-item.ts" />
     <TypeScriptCompile Include="src\modules\todo-list\todo-list.controller.ts" />
     <TypeScriptCompile Include="src\modules\todo-list\todo-list.module.ts" />
   </ItemGroup>
