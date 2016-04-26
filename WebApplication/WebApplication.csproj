@@ -101,6 +101,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="src\modules\common\components\example.component.tpl.html" />
     <Content Include="src\modules\todo-list\todo-list.scss" />
     <Content Include="src\styles\abstractions\mixins.scss" />
     <Content Include="src\styles\abstractions\placeholders.scss" />
@@ -127,15 +128,6 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="src\assets\images\image.png" />
     <Content Include="src\index.html" />
-    <TypeScriptCompile Include="src\modules\common\common.module.ts" />
-    <Content Include="src\modules\common\directives\example.directive.tpl.html" />
-    <Content Include="src\modules\todo-list\todo-list.tpl.html" />
-    <Content Include="Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-component-router.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />
@@ -145,7 +137,17 @@
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="src\modules\common\common.module.ts" />
+    <Content Include="src\modules\common\directives\example.directive.tpl.html" />
+    <Content Include="src\modules\todo-list\todo-list.tpl.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\modules\common\components\example.component.ts" />
     <TypeScriptCompile Include="src\modules\common\directives\example.directive.ts" />
     <TypeScriptCompile Include="src\modules\common\services\storage.service.ts" />
     <TypeScriptCompile Include="src\modules\todo-list\todo-item.ts" />

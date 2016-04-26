@@ -11,5 +11,7 @@ module Common {
         // An example of a directive
         .directive('exampleDirective', ExampleDirective.factory())
         // An example of a service
-        .factory('Storage', Storage.factory());
+        .factory('Storage', Storage.factory())
+        // An example component. Note that components do not need a factory method.
+        .component('exampleComponent', new ExampleComponent());
 }

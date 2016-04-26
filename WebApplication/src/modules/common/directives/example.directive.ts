@@ -4,6 +4,11 @@
  * necessary components you may need to implement your directive.
  * See: https://docs.angularjs.org/guide/directive.
  *
+ * NOTE: A more light-weight option is to use Components.
+ * See the key differences of Component and Directive here:
+ * https://docs.angularjs.org/guide/component
+ * 
+ *
  * Note that the inclusion of this directive to the module is done
  * in the module definition file itself (common.module.ts).
  *
